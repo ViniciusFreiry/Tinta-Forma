@@ -46,6 +46,8 @@ apply_spd = function() {
 	} else {
 		vspd += grav;
 	}
+	
+	vspd = clamp(vspd, -max_vspd, max_vspd);
 }
 
 adjust_scale = function() {
@@ -59,6 +61,10 @@ move = function() {
 
 ground_check = function() {
 	ground = place_meeting(x, y + 1, collisions);
+}
+
+take_power_up = function() {
+	state = power_up_start_state;
 }
 
 // State Functions
@@ -95,18 +101,25 @@ moving_state = function() {
 jump_state = function() {
 	apply_spd();
 	
-	if(vspd > 0) change_sprite(spr_player_fall);
-	else if(vspd < 0) {
+	if(vspd < 0) {
 		if(change_sprite(spr_player_jump)) {
 			if(ground) instance_create_depth(x, y, depth - 1, obj_player_jump_particle);
 			else instance_create_depth(x, y - vspd, depth - 1, obj_player_jump_particle);
 			
 			set_stretch(0.4, 1.6);
 		}
-	} else if(ground) {
-		state = idle_state;
-		instance_create_depth(x, y, depth - 1, obj_player_fall_particle);
-		set_stretch(1.2, 0.5);
+		
+		if(array_contains(collisions, obj_wall_one_way)) array_delete(collisions, array_get_index(collisions, obj_wall_one_way), 1);
+	} else {
+		if(vspd > 0) {
+			change_sprite(spr_player_fall);
+		} else if(ground) {
+			state = idle_state;
+			instance_create_depth(x, y, depth - 1, obj_player_fall_particle);
+			set_stretch(1.2, 0.5);
+		}
+		
+		if(!array_contains(collisions, obj_wall_one_way) and !place_meeting(x, y, obj_wall_one_way)) array_push(collisions, obj_wall_one_way);
 	}
 }
 
