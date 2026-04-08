@@ -6,6 +6,9 @@ max_hspd = 1;
 max_vspd = 5;
 grav = 0.3;
 
+// Collisions
+collisions = [obj_wall, layer_tilemap_get_id("Level")];
+
 // Level Variables
 ground = false;
 
@@ -50,12 +53,12 @@ adjust_scale = function() {
 }
 
 move = function() {
-	move_and_collide(hspd, 0, obj_wall, 12);
-	move_and_collide(0, vspd, obj_wall, 12);
+	move_and_collide(hspd, 0, collisions, 12);
+	move_and_collide(0, vspd, collisions, 12);
 }
 
 ground_check = function() {
-	ground = place_meeting(x, y + 1, obj_wall);
+	ground = place_meeting(x, y + 1, collisions);
 }
 
 // State Functions
@@ -145,7 +148,7 @@ ink_state = function() {
 	apply_spd();
 	vspd = 0;
 	
-	if(!check_ground_in_front(hspd, sprite_index, obj_wall)) hspd = 0;
+	if(!check_ground_in_front(hspd, sprite_index, collisions)) hspd = 0;
 	
 	if(ink) state = exit_ink_state;
 }
