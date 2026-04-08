@@ -1,5 +1,24 @@
 #macro DEBUG_MODE false
+#macro FPS game_get_speed(gamespeed_fps)
 
 #macro Debug_Mode:DEBUG_MODE true
 
 global.debug = false;
+
+function change_sprite(_sprite) {
+	if(sprite_index != _sprite) {
+		sprite_index = _sprite;
+		image_index = 0;
+		return true;
+	}
+	
+	return false;
+}
+
+function animation_end() {
+	var _spd = sprite_get_speed(spr_player_powerup_start) / FPS;
+	
+	if(image_index + _spd >= image_number) return true;
+	
+	return false;
+}
