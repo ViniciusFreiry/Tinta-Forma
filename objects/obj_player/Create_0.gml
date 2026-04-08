@@ -13,6 +13,7 @@ ground = false;
 left = 0
 right = 0;
 jump = 0;
+ink = 0;
 
 // State Variables
 state = noone;
@@ -26,6 +27,7 @@ inputs = function() {
 	left = keyboard_check(ord("A"));
 	right = keyboard_check(ord("D"));
 	jump = keyboard_check(vk_space);
+	ink = keyboard_check(ord("R"));
 }
 
 apply_spd = function() {
@@ -68,6 +70,8 @@ idle_state = function() {
 	
 	if(jump) state = jump_state;
 	
+	if(ink) state = enter_ink_state;
+	
 	if(!ground) state = jump_state;
 }
 
@@ -79,6 +83,8 @@ moving_state = function() {
 	if(left == right) state = idle_state;
 	
 	if(jump) state = jump_state;
+	
+	if(ink) state = enter_ink_state;
 	
 	if(!ground) state = jump_state;
 }
@@ -123,14 +129,31 @@ power_up_final_state = function() {
 }
 
 enter_ink_state = function() {
-	change_sprite(spr_player_enter_ink);
+	if(change_sprite(spr_player_enter_ink)) {
+		instance_create_depth(x, y, depth - 1, obj_player_enter_ink_particles);
+	}
 	
 	hspd = 0;
 	vspd = 0;
+	
+	if(animation_end()) state = ink_state;
+}
+
+ink_state = function() {
+	change_sprite(spr_player_ink_loop);
+	
+	apply_spd();
+	vspd = 0;
+	
+	if(!check_ground_in_front(hspd, sprite_index, obj_wall)) hspd = 0;
+	
+	if(ink) state = exit_ink_state;
 }
 
 exit_ink_state = function() {
-	change_sprite(spr_player_exit_ink);
+	if(change_sprite(spr_player_exit_ink)) {
+		instance_create_depth(x, y, depth - 1, obj_player_exit_ink_particles);
+	}
 	
 	hspd = 0;
 	vspd = 0;
