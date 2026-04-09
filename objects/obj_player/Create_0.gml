@@ -31,6 +31,7 @@ key_qtd = 0;
 
 // Game Feel Initializes
 initialize_stretch();
+initialize_shader_draw();
 #endregion
 
 #region Functions

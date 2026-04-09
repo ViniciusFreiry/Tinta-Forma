@@ -1,7 +1,7 @@
 {
   "$GMShader":"",
-  "%Name":"sh_draw_red",
-  "name":"sh_draw_red",
+  "%Name":"sh_shader_draw",
+  "name":"sh_shader_draw",
   "parent":{
     "name":"Shaders",
     "path":"folders/Game Feel/Shader Draw/Shaders.yy",

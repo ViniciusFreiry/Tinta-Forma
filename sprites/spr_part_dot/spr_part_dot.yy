@@ -23,7 +23,7 @@
   ],
   "name":"spr_part_dot",
   "nineSlice":null,
-  "origin":4,
+  "origin":3,
   "parent":{
     "name":"Sprites",
     "path":"folders/Game Feel/Particles/Sprites.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":1,
+    "xorigin":0,
     "yorigin":1,
   },
   "swatchColours":null,

@@ -17,25 +17,25 @@ if(target_obj == noone) {
 	x += hspd;
 	y += vspd;
 } else {
-	_life_percent = (max_life + actual_life) / (max_life * 2);
-	
-	if(actual_life >= 0) {
-		image_alpha = 1;
+	if(actual_life > 0) {
+		image_alpha = (abs(hspd) + abs(vspd)) / (abs(start_hspd) + abs(start_vspd));
 		image_xscale = original_scale;
 		image_yscale = image_xscale;
 		
 		x += hspd;
 		y += vspd;
 	} else {
+		_life_percent = (max_life + actual_life) / (max_life * 2);
+		
 		var _new_percent = (max_life + actual_life) / max_life,
 		_x = target_obj.x + target_x_offset * target_obj.image_xscale,
 		_y = target_obj.y + target_y_offset * target_obj.image_yscale;
 		
-		image_alpha = _new_percent;
 		image_xscale = original_scale * 3 * _new_percent;
 		image_yscale = original_scale / 3 * _new_percent;
 		image_angle = point_direction(x, y, _x, _y);
 		
+		image_alpha = lerp(image_alpha, 1, 1 - _new_percent);
 		x = lerp(x, _x, 1 - _new_percent);
 		y = lerp(y, _y, 1 - _new_percent);
 	}

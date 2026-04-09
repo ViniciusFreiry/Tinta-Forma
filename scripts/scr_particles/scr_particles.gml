@@ -56,6 +56,7 @@ function create_particles(_layer_name, _type = Particles.SHOOT, _min_life = 20, 
 					_part.original_scale = random_range(_part_scale, _part_scale * 1.5);
 					_part.image_xscale = _part.original_scale;
 					_part.image_yscale = _part.original_scale;
+					_part.image_angle = _dir_part;
 				}
 			}
 		break;
