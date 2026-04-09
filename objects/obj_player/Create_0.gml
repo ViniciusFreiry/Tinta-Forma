@@ -26,6 +26,9 @@ state = noone;
 // Power Up Variables
 power_ink = false;
 
+// Itens Variables
+key_qtd = 0;
+
 // Game Feel Initializes
 initialize_stretch();
 #endregion
@@ -71,6 +74,19 @@ ground_check = function() {
 
 take_power_up = function() {
 	state = power_up_start_state;
+}
+
+take_key = function() {
+	key_qtd++;
+}
+
+open_door = function() {
+	var _door = instance_place(x + hspd, y + vspd, obj_door);
+	
+	if(_door and _door.closed and key_qtd > 0) {
+		_door.open_self();
+		key_qtd--;
+	}
 }
 
 // State Functions
