@@ -188,6 +188,12 @@ exit_ink_state = function() {
 #region Debug
 view_player_debug = noone;
 
+draw_debug = function() {
+	if(!global.debug) return;
+	
+	draw_rectangle(bbox_left, bbox_top, bbox_right, bbox_bottom, true);
+}
+
 show_debug = function() {
 	show_debug_overlay(global.debug);
 	
