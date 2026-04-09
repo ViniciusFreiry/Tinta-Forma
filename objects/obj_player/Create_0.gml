@@ -8,9 +8,11 @@ grav = 0.3;
 
 // Collisions
 collisions = [obj_wall, layer_tilemap_get_id("Level")];
+collision_ink = layer_tilemap_get_id("Ink");
 
 // Level Variables
 ground = false;
+ground_ink = false;
 
 // Inputs Variables
 left = 0
@@ -21,7 +23,10 @@ ink = 0;
 // State Variables
 state = noone;
 
-// Game Feel Initialize
+// Power Up Variables
+power_ink = false;
+
+// Game Feel Initializes
 initialize_stretch();
 #endregion
 
@@ -61,6 +66,7 @@ move = function() {
 
 ground_check = function() {
 	ground = place_meeting(x, y + 1, collisions);
+	ground_ink = place_meeting(x, y + 1, collision_ink);
 }
 
 take_power_up = function() {
@@ -73,15 +79,13 @@ idle_state = function() {
 	hspd = 0;
 	apply_spd();
 	
-	change_sprite(spr_player_idle);
+	if(change_sprite(spr_player_idle)) mask_index = spr_player_idle;
 	
 	if(left != right) state = moving_state;
 	
-	if(jump) state = jump_state;
+	if(ink and power_ink and ground_ink) state = enter_ink_state;
 	
-	if(ink) state = enter_ink_state;
-	
-	if(!ground) state = jump_state;
+	if(jump or !ground) state = jump_state;
 }
 
 moving_state = function() {
@@ -91,11 +95,9 @@ moving_state = function() {
 	
 	if(left == right) state = idle_state;
 	
-	if(jump) state = jump_state;
+	if(ink and power_ink and ground_ink) state = enter_ink_state;
 	
-	if(ink) state = enter_ink_state;
-	
-	if(!ground) state = jump_state;
+	if(jump or !ground) state = jump_state;
 }
 
 jump_state = function() {
@@ -133,9 +135,9 @@ power_up_start_state = function() {
 }
 
 power_up_wait_state = function() {
-	change_sprite(spr_player_powerup_wait);
-	
-	if(animation_end()) state = power_up_final_state;
+	if(!change_sprite(spr_player_powerup_wait)) {
+		if(!instance_exists(obj_particle_power_up)) state = power_up_final_state;
+	}
 }
 
 power_up_final_state = function() {
@@ -156,14 +158,19 @@ enter_ink_state = function() {
 }
 
 ink_state = function() {
-	change_sprite(spr_player_ink_loop);
+	if(change_sprite(spr_player_ink_loop)) mask_index = spr_player_ink_loop;
 	
 	apply_spd();
 	vspd = 0;
 	
-	if(!check_ground_in_front(hspd, sprite_index, collisions)) hspd = 0;
+	if(!check_ground_in_front(hspd, sprite_index, collision_ink)) hspd = 0;
 	
-	if(ink) state = exit_ink_state;
+	if(ink) {
+		mask_index = spr_player_idle;
+		
+		if(!place_meeting(x, y, collisions)) state = exit_ink_state;
+		else mask_index = spr_player_ink_loop;
+	}
 }
 
 exit_ink_state = function() {

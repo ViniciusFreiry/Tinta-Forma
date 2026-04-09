@@ -14,5 +14,5 @@ function run_stretch(_lerp_percentage = 0.1) {
 }
 
 function draw_stretch() {
-	draw_sprite_ext(sprite_index, image_index, x, y, stretch_xscale * sign(image_xscale), stretch_yscale * sign(image_yscale), image_angle, image_blend, image_alpha);
+	draw_sprite_ext(sprite_index, image_index, x, y, stretch_xscale * image_xscale, stretch_yscale * image_yscale, image_angle, image_blend, image_alpha);
 }

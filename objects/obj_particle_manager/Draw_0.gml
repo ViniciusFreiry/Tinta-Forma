@@ -7,3 +7,7 @@ if(instance_exists(obj_particle_shoot)) {
 		
 	gpu_set_blendmode(bm_normal);
 }
+
+with(obj_particle_power_up) {
+	draw_self();
+}
