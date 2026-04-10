@@ -1,0 +1,1 @@
+my_dialog_box = noone;

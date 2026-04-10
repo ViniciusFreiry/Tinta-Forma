@@ -21,7 +21,7 @@ power_up_part = function() {
 					var _qtd = irandom_range(50, 100);
 					
 					for(var _i = 0; _i < _qtd; _i++) {
-						create_particles("Decorations_Objects", Particles.POWER_UP, 30, 60, x, y, 0, 0, 2, 3, 0, 1, 1, c_white, choose(c_aqua, c_red, c_yellow, c_lime, c_maroon, c_fuchsia), 1);
+						create_particles("Decorations_Objects", Particles.POWER_UP, 30, 60, x, y, 0, 0, 2, 3, 0, 1, 1, c_white, choose(c_aqua, c_red, c_yellow, c_lime, c_orange, c_fuchsia), 1);
 					}
 					
 					set_target_power_up_particles(target, 0, -10);
