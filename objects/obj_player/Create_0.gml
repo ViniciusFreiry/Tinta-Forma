@@ -5,9 +5,10 @@ vspd = 0;
 max_hspd = 1;
 max_vspd = 5;
 grav = 0.3;
-jumps_qtd = 2;
+jumps_qtd = 1;
 actual_jumps_qtd = jumps_qtd;
 start_jump = true;
+initialize_coyote_jump();
 
 // Collisions
 collision_ink = layer_tilemap_get_id("Ink");
@@ -26,9 +27,7 @@ jump_r = 0;
 ink = 0;
 
 // State Variables
-state = noone;
-sprites_list = [spr_player_idle];
-sprites_list_index = 0;
+initialize_states_with_animation();
 
 // Power Up Variables
 power_ink = false;
@@ -42,18 +41,6 @@ initialize_shader_draw();
 #endregion
 
 #region Functions
-change_sprite_with_animation = function() {
-	if(animation_end() and array_length(sprites_list) - 1 > sprites_list_index) sprites_list_index++;
-	
-	return change_sprite(sprites_list[sprites_list_index]);
-}
-
-change_state = function(_state = idle_state, _sprites_list = [spr_player_idle]) {
-	state = _state;
-	sprites_list_index = 0;
-	sprites_list = _sprites_list;
-}
-
 inputs = function() {
 	left = keyboard_check(ord("A"));
 	right = keyboard_check(ord("D"));
@@ -150,10 +137,17 @@ jump_state = function() {
 		start_jump = false;
 	}
 	
-	if(jump and actual_jumps_qtd > 0) {
-		change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
-		actual_jumps_qtd--;
+	if(jump) {
+		if(check_coyote_jump()) {
+			change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
+			vspd = -max_vspd;
+		} else if(actual_jumps_qtd > 0) {
+			change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
+			actual_jumps_qtd--;
+		}
 	}
+	
+	if(vspd < 0) stop_coyote_timer();
 	
 	var _collisions = [obj_wall, collision_tl];
 	if(hit_the_ceil(vspd, _collisions)) vspd = 0;
@@ -264,7 +258,7 @@ show_debug = function() {
 		return;
 	}
 	
-	view_player_debug = dbg_view("View Player", 1, 20, 100, 400, 200);
+	view_player_debug = dbg_view("View Player", 1, 20, 100, 400, 400);
 	
 	dbg_watch(ref_create(id, "x"), "x");
 	dbg_watch(ref_create(id, "y"), "y");
@@ -274,6 +268,10 @@ show_debug = function() {
 
 	dbg_slider(ref_create(id, "max_vspd"), 0, 10, "Jump Force", 0.1);
 	dbg_slider(ref_create(id, "grav"), 0, 2, "Gravity", 0.05);
+	
+	dbg_watch(ref_create(id, "actual_jumps_qtd"), "Jumps Quantity");
+	dbg_watch(ref_create(id, "actual_coyote_timer"), "Coyote Timer");
+	dbg_slider(ref_create(id, "coyote_timer"), 0, FPS, "Coyote Jump", 1);
 }
 
 debug_check = function() {
@@ -287,4 +285,6 @@ debug_check = function() {
 }
 #endregion
 
+debug_check();
+show_debug();
 state = idle_state;

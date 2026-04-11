@@ -22,3 +22,23 @@ function animation_end() {
 	
 	return false;
 }
+
+#region States with Animation
+function initialize_states_with_animation(_sprite = sprite_index) {
+	state = noone;
+	sprites_list = [_sprite];
+	sprites_list_index = 0;
+}
+
+function change_sprite_with_animation() {
+	if(animation_end() and array_length(sprites_list) - 1 > sprites_list_index) sprites_list_index++;
+	
+	return change_sprite(sprites_list[sprites_list_index]);
+}
+
+function change_state(_state, _sprites_list) {
+	state = _state;
+	sprites_list_index = 0;
+	sprites_list = _sprites_list;
+}
+#endregion

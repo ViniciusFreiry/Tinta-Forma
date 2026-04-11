@@ -6,6 +6,7 @@ open_door();
 
 run_stretch(0.1);
 run_shader_draw();
+run_coyote_jump(ground);
 
 debug_check();
 
