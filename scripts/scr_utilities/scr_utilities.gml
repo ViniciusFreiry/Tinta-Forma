@@ -22,7 +22,3 @@ function animation_end() {
 	
 	return false;
 }
-
-function check_ground_in_front(_hspd, _sprite, _obj_to_check) {
-	return place_meeting(x + (sign(_hspd) * sprite_get_width(_sprite)), y + 1, _obj_to_check);
-}

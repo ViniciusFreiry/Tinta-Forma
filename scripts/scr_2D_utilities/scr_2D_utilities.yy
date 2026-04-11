@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_utilities",
+  "%Name":"scr_2D_utilities",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_utilities",
+  "name":"scr_2D_utilities",
   "parent":{
     "name":"Scripts",
     "path":"folders/Utilities/Scripts.yy",

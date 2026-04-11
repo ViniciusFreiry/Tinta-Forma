@@ -19,6 +19,7 @@ ground_ink = false;
 left = 0
 right = 0;
 jump = 0;
+jump_r = 0;
 ink = 0;
 
 // State Variables
@@ -53,7 +54,8 @@ change_state = function(_state = idle_state, _sprites_list = [spr_player_idle]) 
 inputs = function() {
 	left = keyboard_check(ord("A"));
 	right = keyboard_check(ord("D"));
-	jump = keyboard_check(vk_space);
+	jump = keyboard_check_pressed(vk_space);
+	jump_r = keyboard_check_released(vk_space);
 	ink = keyboard_check(vk_shift);
 }
 
@@ -140,9 +142,11 @@ jump_state = function() {
 	apply_spd();
 	
 	var _collisions = [obj_wall, collision_tl];
-	if(place_meeting(x, y + sign(vspd), _collisions)) vspd = 0;
+	if(hit_the_ceil(vspd, _collisions)) vspd = 0;
 	
 	if(vspd < 0) {
+		if(jump_r) vspd /= 2;
+		
 		if(change_sprite_with_animation() and sprite_index == spr_player_start_jump) {
 			instance_create_depth(x, y - vspd, depth - 1, obj_player_jump_particle);
 			set_stretch(0.4, 1.6);
