@@ -1,3 +1,15 @@
+global.wave_frequency = 0.25;
+global.shake_force = 3;
+global.wheel_speed = 3;
+global.pulse_speed = 2;
+
+function set_draw_rich_text(_wave_frequency = 0.25, _shake_force = 3, _wheel_speed = 3, _pulse_speed = 2) {
+	global.wave_frequency = _wave_frequency;
+	global.shake_force = _shake_force;
+	global.wheel_speed = _wheel_speed;
+	global.pulse_speed = _pulse_speed;
+}
+
 function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visible = -1) {
     var _halign = draw_get_halign();
     var _valign = draw_get_valign();
@@ -14,12 +26,12 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
 	        case "i":
 	        case "!":
 	        case "|":
-	            w += 1.5 / _scale;
+	            w += 0.5 / _scale;
 	        break;
         
 	        case "W":
 	        case "M":
-	            w -= 1.5 / _scale;
+	            w -= 0.5 / _scale;
 	        break;
         
 	        case " ":
@@ -210,6 +222,7 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
         var fx_italic = false;
         var fx_rainbow = false;
         var fx_wheel = false;
+		var fx_pulse = false;
         
         var k = 1;
         
@@ -248,6 +261,9 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
                         
                         case "wheel": fx_wheel = true; break;
                         case "/wheel": fx_wheel = false; break;
+						
+						case "pulse": fx_pulse = true; break;
+						case "/pulse": fx_pulse = false; break;
                     }
                 }
                 
@@ -261,12 +277,12 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
             var draw_y = pos_y;
             
             if (fx_shake) {
-                draw_x += random_range(-3,3) * _xscale;
-                draw_y += random_range(-3,3) * _yscale;
+                draw_x += random_range(-global.shake_force, global.shake_force) * _xscale;
+                draw_y += random_range(-global.shake_force, global.shake_force) * _yscale;
             }
             
             if (fx_wave) {
-                draw_y += sin(_time + pos_x * 0.1) * (5 * _yscale);
+                draw_y += sin(_time + pos_x * global.wave_frequency) * (5 * _yscale);
             }
             
             var final_color = current_color;
@@ -281,23 +297,32 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
             if (fx_wheel) {
                 var radius_x = 6 * _xscale;
                 var radius_y = 6 * _yscale;
-                var angle = (_time * 3) + (pos_x * 0.05) + (pos_y * 0.05);
+                var angle = (_time * global.wheel_speed) + (pos_x * 0.05) + (pos_y * 0.05);
                 draw_x += cos(angle) * radius_x;
                 draw_y += sin(angle) * radius_y;
             }
+			
+			var final_xscale = _xscale;
+			var final_yscale = _yscale;
+
+			if (fx_pulse) {
+			    var pulse = 1 + sin(_time * global.pulse_speed + pos_x * 0.05) * 0.15;
+			    final_xscale *= pulse;
+			    final_yscale *= pulse;
+			}
             
             if (fx_outline) {
                 draw_set_color(c_white);
                 
                 for (var ox = -1; ox <= 1; ox += 2) {
                     for (var oy = -1; oy <= 1; oy += 2) {
-                        draw_text_transformed(draw_x + ox, draw_y + oy, ch, _xscale, _yscale, rot);
+                        draw_text_transformed(draw_x + ox, draw_y + oy, ch, final_xscale, final_yscale, rot);
                     }
                 }
             }
             
             draw_set_color(final_color);
-            draw_text_transformed(draw_x, draw_y, ch, _xscale, _yscale, rot);
+            draw_text_transformed(draw_x, draw_y, ch, final_xscale, final_yscale, rot);
             
             pos_x += get_char_advance(ch, _xscale);
             visible_count++;

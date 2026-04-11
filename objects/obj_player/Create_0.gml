@@ -7,8 +7,9 @@ max_vspd = 5;
 grav = 0.3;
 
 // Collisions
-collisions = [obj_wall, layer_tilemap_get_id("Level")];
 collision_ink = layer_tilemap_get_id("Ink");
+collision_tl = layer_tilemap_get_id("Level")
+collisions = [obj_wall, collision_tl];
 
 // Level Variables
 ground = false;
@@ -22,6 +23,8 @@ ink = 0;
 
 // State Variables
 state = noone;
+sprites_list = [spr_player_idle];
+sprites_list_index = 0;
 
 // Power Up Variables
 power_ink = false;
@@ -35,11 +38,23 @@ initialize_shader_draw();
 #endregion
 
 #region Functions
+change_sprite_with_animation = function() {
+	if(animation_end() and array_length(sprites_list) - 1 > sprites_list_index) sprites_list_index++;
+	
+	return change_sprite(sprites_list[sprites_list_index]);
+}
+
+change_state = function(_state = idle_state, _sprites_list = [spr_player_idle]) {
+	state = _state;
+	sprites_list_index = 0;
+	sprites_list = _sprites_list;
+}
+
 inputs = function() {
 	left = keyboard_check(ord("A"));
 	right = keyboard_check(ord("D"));
 	jump = keyboard_check(vk_space);
-	ink = keyboard_check(ord("R"));
+	ink = keyboard_check(vk_shift);
 }
 
 apply_spd = function() {
@@ -51,7 +66,7 @@ apply_spd = function() {
 		vspd = 0;
 		y = round(y);
 		
-		if (jump) vspd = -max_vspd;
+		if (jump and state != jump_state) vspd = -max_vspd;
 	} else {
 		vspd += grav;
 	}
@@ -96,44 +111,54 @@ idle_state = function() {
 	hspd = 0;
 	apply_spd();
 	
-	if(change_sprite(spr_player_idle)) mask_index = spr_player_idle;
+	if(change_sprite_with_animation()) mask_index = spr_player_idle;
 	
-	if(left != right) state = moving_state;
+	if(left != right) change_state(moving_state, [spr_player_idle_to_run, spr_player_run]);
 	
 	if(ink and power_ink and ground_ink) state = enter_ink_state;
 	
-	if(jump or !ground) state = jump_state;
+	if(!ground) change_state(jump_state, [spr_player_fall]);
+	
+	if(jump) change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
 }
 
 moving_state = function() {
 	apply_spd();
 	
-	change_sprite(spr_player_run);
+	change_sprite_with_animation();
 	
-	if(left == right) state = idle_state;
+	if(left == right) change_state(idle_state, [spr_player_run_to_idle, spr_player_idle]);
 	
 	if(ink and power_ink and ground_ink) state = enter_ink_state;
 	
-	if(jump or !ground) state = jump_state;
+	if(!ground) change_state(jump_state, [spr_player_fall]);
+	
+	if(jump) change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
 }
 
 jump_state = function() {
 	apply_spd();
 	
+	var _collisions = [obj_wall, collision_tl];
+	if(place_meeting(x, y + sign(vspd), _collisions)) vspd = 0;
+	
 	if(vspd < 0) {
-		if(change_sprite(spr_player_jump)) {
-			if(ground) instance_create_depth(x, y, depth - 1, obj_player_jump_particle);
-			else instance_create_depth(x, y - vspd, depth - 1, obj_player_jump_particle);
-			
+		if(change_sprite_with_animation() and sprite_index == spr_player_start_jump) {
+			instance_create_depth(x, y - vspd, depth - 1, obj_player_jump_particle);
 			set_stretch(0.4, 1.6);
 		}
 		
 		if(array_contains(collisions, obj_wall_one_way)) array_delete(collisions, array_get_index(collisions, obj_wall_one_way), 1);
 	} else {
+		if(sprites_list[0] != spr_player_jump_to_fall and sprites_list[0] != spr_player_fall) {
+			image_index = 0;
+			change_state(jump_state, [spr_player_jump_to_fall, spr_player_fall]);
+		}
+		
 		if(vspd > 0) {
-			change_sprite(spr_player_fall);
+			change_sprite_with_animation();
 		} else if(ground) {
-			state = idle_state;
+			change_state(idle_state, [spr_player_land, spr_player_idle]);
 			instance_create_depth(x, y, depth - 1, obj_player_fall_particle);
 			set_stretch(1.2, 0.5);
 		}
@@ -160,7 +185,7 @@ power_up_wait_state = function() {
 power_up_final_state = function() {
 	change_sprite(spr_player_powerup_final);
 	
-	if(animation_end()) state = idle_state;
+	if(animation_end()) change_state(idle_state, [spr_player_idle]);
 }
 
 enter_ink_state = function() {
@@ -171,11 +196,11 @@ enter_ink_state = function() {
 	hspd = 0;
 	vspd = 0;
 	
-	if(animation_end()) state = ink_state;
+	if(animation_end()) change_state(ink_state, [spr_player_ink_start, spr_player_ink_loop]);
 }
 
 ink_state = function() {
-	if(change_sprite(spr_player_ink_loop)) mask_index = spr_player_ink_loop;
+	if(change_sprite_with_animation()) mask_index = spr_player_ink_loop;
 	
 	apply_spd();
 	vspd = 0;
@@ -185,20 +210,20 @@ ink_state = function() {
 	if(ink) {
 		mask_index = spr_player_idle;
 		
-		if(!place_meeting(x, y, collisions)) state = exit_ink_state;
+		if(!place_meeting(x, y, collisions)) change_state(exit_ink_state, [spr_player_ink_end, spr_player_exit_ink]);
 		else mask_index = spr_player_ink_loop;
 	}
 }
 
 exit_ink_state = function() {
-	if(change_sprite(spr_player_exit_ink)) {
+	if(change_sprite_with_animation() and sprite_index == spr_player_exit_ink) {
 		instance_create_depth(x, y, depth - 1, obj_player_exit_ink_particles);
 	}
 	
 	hspd = 0;
 	vspd = 0;
 	
-	if(animation_end()) state = idle_state;
+	if(animation_end() and sprite_index == spr_player_exit_ink) change_state(idle_state, [spr_player_idle]);
 }
 #endregion
 
