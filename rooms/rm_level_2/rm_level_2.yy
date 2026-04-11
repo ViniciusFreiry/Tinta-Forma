@@ -19,6 +19,7 @@
     {"name":"inst_5D82D5FA","path":"rooms/rm_level_2/rm_level_2.yy",},
     {"name":"inst_2335881D","path":"rooms/rm_level_2/rm_level_2.yy",},
     {"name":"inst_1A8F15DB","path":"rooms/rm_level_2/rm_level_2.yy",},
+    {"name":"inst_525290DD","path":"rooms/rm_level_2/rm_level_2.yy",},
   ],
   "isDnd":false,
   "layers":[
@@ -39,6 +40,9 @@
     {"$GMRInstanceLayer":"","%Name":"Level_Objects","depth":400,"effectEnabled":true,"effectType":null,"gridX":8,"gridY":8,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
         {"$GMRInstance":"v4","%Name":"inst_7DD2F1DF","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_7DD2F1DF","objectId":{"name":"obj_easel","path":"objects/obj_easel/obj_easel.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":222.0,"y":160.0,},
         {"$GMRInstance":"v4","%Name":"inst_3C327A0C","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_3C327A0C","objectId":{"name":"obj_easel","path":"objects/obj_easel/obj_easel.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":291.0,"y":160.0,},
+        {"$GMRInstance":"v4","%Name":"inst_525290DD","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_525290DD","objectId":{"name":"obj_sign","path":"objects/obj_sign/obj_sign.yy",},"properties":[
+            {"$GMOverriddenProperty":"v1","%Name":"","name":"","objectId":{"name":"obj_sign","path":"objects/obj_sign/obj_sign.yy",},"propertyId":{"name":"my_text","path":"objects/obj_sign/obj_sign.yy",},"resourceType":"GMOverriddenProperty","resourceVersion":"2.0","value":"Press {#FF00FF}{pulse}Shift{/pulse}{/#FF00FF} to use your {rainbow}{wave}Power{/rainbow}{/wave}!",},
+          ],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":592.0,"y":128.0,},
       ],"layers":[],"name":"Level_Objects","properties":[],"resourceType":"GMRInstanceLayer","resourceVersion":"2.0","userdefinedDepth":false,"visible":true,},
     {"$GMRAssetLayer":"","%Name":"Decorations","assets":[
         {"$GMRSpriteGraphic":"v1","%Name":"graphic_5F85B6CF1","animationSpeed":1.0,"colour":4294967295,"frozen":false,"headPosition":0.0,"ignore":false,"inheritedItemId":null,"inheritItemSettings":false,"name":"graphic_5F85B6CF1","resourceType":"GMRSpriteGraphic","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"spriteId":{"name":"spr_small_window","path":"sprites/spr_small_window/spr_small_window.yy",},"x":529.0,"y":96.0,},
