@@ -5,6 +5,9 @@ vspd = 0;
 max_hspd = 1;
 max_vspd = 5;
 grav = 0.3;
+jumps_qtd = 2;
+actual_jumps_qtd = jumps_qtd;
+start_jump = true;
 
 // Collisions
 collision_ink = layer_tilemap_get_id("Ink");
@@ -67,11 +70,12 @@ apply_spd = function() {
 	if (ground) {
 		vspd = 0;
 		y = round(y);
-		
-		if (jump and state != jump_state) vspd = -max_vspd;
 	} else {
 		vspd += grav;
 	}
+	
+	if (jump and actual_jumps_qtd > 0) vspd = -max_vspd;
+
 	
 	vspd = clamp(vspd, -max_vspd, max_vspd);
 }
@@ -138,8 +142,18 @@ moving_state = function() {
 	if(jump) change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
 }
 
-jump_state = function() {
+jump_state = function() {	
 	apply_spd();
+	
+	if(start_jump) {
+		actual_jumps_qtd--;
+		start_jump = false;
+	}
+	
+	if(jump and actual_jumps_qtd > 0) {
+		change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
+		actual_jumps_qtd--;
+	}
 	
 	var _collisions = [obj_wall, collision_tl];
 	if(hit_the_ceil(vspd, _collisions)) vspd = 0;
@@ -165,6 +179,8 @@ jump_state = function() {
 			change_state(idle_state, [spr_player_land, spr_player_idle]);
 			instance_create_depth(x, y, depth - 1, obj_player_fall_particle);
 			set_stretch(1.2, 0.5);
+			actual_jumps_qtd = jumps_qtd;
+			start_jump = true;
 		}
 		
 		if(!array_contains(collisions, obj_wall_one_way) and !place_meeting(x, y, obj_wall_one_way)) array_push(collisions, obj_wall_one_way);
