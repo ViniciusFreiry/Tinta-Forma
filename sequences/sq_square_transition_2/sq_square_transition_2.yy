@@ -33,7 +33,7 @@
   "name":"sq_square_transition_2",
   "parent":{
     "name":"Sequencias",
-    "path":"folders/Game Feel/Transition/Sequencias.yy",
+    "path":"folders/Utilities/Game Feel/Transition/Sequencias.yy",
   },
   "playback":0,
   "playbackSpeed":60.0,

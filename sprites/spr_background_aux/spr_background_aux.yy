@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"Sprites",
-    "path":"folders/Game Feel/Transition/Sprites.yy",
+    "path":"folders/Utilities/Game Feel/Transition/Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

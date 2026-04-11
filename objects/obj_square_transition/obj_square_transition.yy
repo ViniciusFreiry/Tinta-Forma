@@ -14,7 +14,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Game Feel/Transition/Objects.yy",
+    "path":"folders/Utilities/Game Feel/Transition/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

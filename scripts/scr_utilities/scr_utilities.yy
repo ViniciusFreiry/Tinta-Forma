@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_utilities",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Utilities",
+    "path":"folders/Utilities.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -6,7 +6,7 @@
   "name":"scr_transition",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Game Feel/Transition/Scripts.yy",
+    "path":"folders/Utilities/Game Feel/Transition/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

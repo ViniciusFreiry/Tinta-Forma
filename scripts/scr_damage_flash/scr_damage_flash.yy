@@ -6,7 +6,7 @@
   "name":"scr_damage_flash",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Game Feel/Damage Flash/Scripts.yy",
+    "path":"folders/Utilities/Game Feel/Damage Flash/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

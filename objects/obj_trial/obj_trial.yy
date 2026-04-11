@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Game Feel/Trial/Objects.yy",
+    "path":"folders/Utilities/Game Feel/Trial/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

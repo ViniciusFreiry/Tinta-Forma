@@ -6,7 +6,7 @@
   "name":"scr_rich_text",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Game Feel/Rich Text/Scripts.yy",
+    "path":"folders/Utilities/Game Feel/Rich Text/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

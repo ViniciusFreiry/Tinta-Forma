@@ -6,7 +6,7 @@
   "name":"scr_screen_shake",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Game Feel/Screen Shake/Scripts.yy",
+    "path":"folders/Utilities/Game Feel/Screen Shake/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

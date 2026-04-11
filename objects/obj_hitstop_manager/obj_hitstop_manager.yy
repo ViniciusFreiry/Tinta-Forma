@@ -10,7 +10,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Game Feel/Hit Stop/Objects.yy",
+    "path":"folders/Utilities/Game Feel/Hit Stop/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

@@ -6,7 +6,7 @@
   "name":"scr_stretch",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Game Feel/Stretch/Scripts.yy",
+    "path":"folders/Utilities/Game Feel/Stretch/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

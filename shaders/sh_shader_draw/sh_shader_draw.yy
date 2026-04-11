@@ -4,7 +4,7 @@
   "name":"sh_shader_draw",
   "parent":{
     "name":"Shaders",
-    "path":"folders/Game Feel/Shader Draw/Shaders.yy",
+    "path":"folders/Utilities/Game Feel/Shader Draw/Shaders.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

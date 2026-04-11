@@ -6,7 +6,7 @@
   "name":"scr_glow",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Game Feel/Glow/Scripts.yy",
+    "path":"folders/Utilities/Game Feel/Glow/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

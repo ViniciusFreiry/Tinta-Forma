@@ -6,7 +6,7 @@
   "name":"scr_hitstop",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Game Feel/Hit Stop/Scripts.yy",
+    "path":"folders/Utilities/Game Feel/Hit Stop/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

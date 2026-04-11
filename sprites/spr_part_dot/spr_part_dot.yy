@@ -26,7 +26,7 @@
   "origin":3,
   "parent":{
     "name":"Sprites",
-    "path":"folders/Game Feel/Particles/Sprites.yy",
+    "path":"folders/Utilities/Game Feel/Particles/Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

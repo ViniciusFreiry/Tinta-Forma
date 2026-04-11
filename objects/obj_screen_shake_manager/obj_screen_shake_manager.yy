@@ -10,7 +10,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/Game Feel/Screen Shake/Objects.yy",
+    "path":"folders/Utilities/Game Feel/Screen Shake/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

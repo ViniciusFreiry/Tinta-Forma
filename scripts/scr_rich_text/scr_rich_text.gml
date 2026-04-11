@@ -2,12 +2,14 @@ global.wave_frequency = 0.25;
 global.shake_force = 3;
 global.wheel_speed = 3;
 global.pulse_speed = 2;
+global.rainbow_speed = 0.2;
 
-function set_draw_rich_text(_wave_frequency = 0.25, _shake_force = 3, _wheel_speed = 3, _pulse_speed = 2) {
+function set_draw_rich_text(_wave_frequency = 0.25, _shake_force = 3, _wheel_speed = 3, _pulse_speed = 2, _rainbow_speed = 0.2) {
 	global.wave_frequency = _wave_frequency;
 	global.shake_force = _shake_force;
 	global.wheel_speed = _wheel_speed;
 	global.pulse_speed = _pulse_speed;
+	global.rainbow_speed = _rainbow_speed;
 }
 
 function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visible = -1) {
@@ -17,90 +19,90 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
     var _line_height = string_height("A") * _yscale;
     var _time = current_time * 0.005;
     
-	var get_char_advance = function(_ch, _scale) {
-	    var w = string_width(_ch);
+	static get_char_advance = function(_char, _scale) {
+	    var _width = string_width(_char);
     
-	    switch (_ch) {
+	    switch (_char) {
 	        case "I":
 	        case "l":
 	        case "i":
 	        case "!":
 	        case "|":
-	            w += 0.5 / _scale;
+	            _width += 0.5 / _scale;
 	        break;
         
 	        case "W":
 	        case "M":
-	            w -= 0.5 / _scale;
+	            _width -= 0.5 / _scale;
 	        break;
         
 	        case " ":
-	            w += 2 / _scale;
+	            _width += 2 / _scale;
 	        break;
 	    }
     
-	    return w * _scale;
+	    return _width * _scale;
 	}
 	
-    var make_color_hex = function(_hex_string) {
+    static make_color_hex = function(_hex_string) {
         if (string_char_at(_hex_string, 1) == "#") {
             _hex_string = string_delete(_hex_string, 1, 1);
         }
     
         if (string_length(_hex_string) != 6) return c_white;
     
-        var r = real("0x" + string_copy(_hex_string, 1, 2));
-        var g = real("0x" + string_copy(_hex_string, 3, 2));
-        var b = real("0x" + string_copy(_hex_string, 5, 2));
+        var _r = real("0x" + string_copy(_hex_string, 1, 2)),
+		_g = real("0x" + string_copy(_hex_string, 3, 2)),
+		_b = real("0x" + string_copy(_hex_string, 5, 2));
     
-        return make_color_rgb(r, g, b);
+        return make_color_rgb(_r, _g, _b);
     }
     
     // Active Tags Controll
-    var active_tags = [];
+    var _active_tags = [];
     
-    var push_tag = function(tag, _array) {
-        array_push(_array, tag);
+    static push_tag = function(_tag_to_push, _array) {
+        array_push(_array, _tag_to_push);
     }
     
-    var remove_tag = function(tag, _array) {
-        for (var t = array_length(_array)-1; t >= 0; t--) {
-            if (_array[t] == tag) {
-                array_delete(_array, t, 1);
+    static remove_tag = function(_tag_to_remove, _array) {
+        for (var _t = array_length(_array)-1; _t >= 0; _t--) {
+            if (_array[_t] == _tag_to_remove) {
+                array_delete(_array, _t, 1);
                 break;
             }
         }
     }
     
-    var build_active_string = function(_array) {
-        var s = "";
-        for (var t = 0; t < array_length(_array); t++) {
-            s += "{" + _array[t] + "}";
+    static build_active_string = function(_array) {
+        var _s = "";
+        for (var _t = 0; _t < array_length(_array); _t++) {
+            _s += "{" + _array[_t] + "}";
         }
-        return s;
+        return _s;
     }
 	
-	var trim_end_space = function(_str) {
+	static trim_end_space = function(_str) {
 	    while (string_length(_str) > 0 && string_char_at(_str, string_length(_str)) == " ") {
 	        _str = string_delete(_str, string_length(_str), 1);
 	    }
 	    return _str;
 	}
     
-    // Step 1: Break text into lines
-    var lines = [];
-    var line = "";
-    var line_width = 0;
+    // Step 1: Break text into _lines
+    var _lines = [];
+    var _line = "";
+    var _line_width = 0;
     
     var i = 1;
-    
+	
     while (i <= string_length(_text)) {
         var c = string_char_at(_text, i);
         
         if (c == "\n") {
-            array_push(lines, line);
-            line = build_active_string(active_tags);
-            line_width = 0;
+            array_push(_lines, _line);
+            _line = build_active_string(_active_tags);
+            _line_width = 0;
             i++;
             continue;
         }
@@ -117,12 +119,12 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
             
             // State Controll
             if (string_char_at(tag,1) == "/") {
-                remove_tag(string_delete(tag,1,1), active_tags);
+                remove_tag(string_delete(tag,1,1), _active_tags);
             } else {
-                push_tag(tag, active_tags);
+                push_tag(tag, _active_tags);
             }
             
-            line += "{" + tag + "}";
+            _line += "{" + tag + "}";
             i++;
             continue;
         }
@@ -151,13 +153,13 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
                 look_i++;
             }
             
-            if (line_width > 0 && line_width + word_w > _w) {
-			    line = trim_end_space(line);
+            if (_line_width > 0 && _line_width + word_w > _w) {
+			    _line = trim_end_space(_line);
     
-			    array_push(lines, line);
+			    array_push(_lines, _line);
 				
-			    line = build_active_string(active_tags);
-			    line_width = 0;
+			    _line = build_active_string(_active_tags);
+			    _line_width = 0;
 
 			    while (i <= string_length(_text) && string_char_at(_text, i) == " ") {
 			        i++;
@@ -167,29 +169,29 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
 			}
         }
         
-        if (!(c == " " && line == "")) {
-            line += c;
-            line_width += get_char_advance(c, _xscale);
+        if (!(c == " " && _line == "")) {
+            _line += c;
+            _line_width += get_char_advance(c, _xscale);
         }
         
         i++;
     }
     
-    if (line != "") array_push(lines, line);
+    if (_line != "") array_push(_lines, _line);
     
     // Vertical Alignment
-    var total_h = (array_length(lines) - 1) * (_line_height + _sep) - _sep;
+    var total_h = (array_length(_lines) -  1) * (_line_height + _sep) - _sep;
     var start_y = _y;
-    
+	
     if (_valign == fa_middle) start_y -= total_h * 0.5;
     if (_valign == fa_bottom) start_y -= total_h;
     
     // PASSO 2: Draw
     var visible_count = 0;
     
-    for (var li = 0; li < array_length(lines); li++) {
+    for (var li = 0; li < array_length(_lines); li++) {
         
-        var text_line = lines[li];
+        var text_line = _lines[li];
         
         var clean_w = 0;
         var skip = false;
@@ -288,7 +290,7 @@ function draw_rich_text(_x, _y, _text, _sep, _w, _xscale = 1, _yscale = 1, _visi
             var final_color = current_color;
             
             if (fx_rainbow) {
-                var hue = frac((_time * 0.2) + (pos_x * 0.01));
+                var hue = frac((_time * global.rainbow_speed) + (pos_x * 0.01));
                 final_color = make_color_hsv(hue * 255, 255, 255);
             }
             
