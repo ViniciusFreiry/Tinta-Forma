@@ -42,3 +42,7 @@ function change_state(_state, _sprites_list) {
 	sprites_list = _sprites_list;
 }
 #endregion
+
+function generate_sin_wave(_frequency = 5, _current_time = current_time) {
+	return sin(_frequency * _current_time / 1000);
+}

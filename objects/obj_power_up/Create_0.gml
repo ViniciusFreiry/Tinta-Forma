@@ -1,3 +1,5 @@
+if(global.ink_power_up and !place_meeting(x, y, obj_player)) instance_destroy(id, false);
+
 target = noone;
 x_offset = 0;
 y_offset = -40;

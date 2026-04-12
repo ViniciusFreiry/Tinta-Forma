@@ -33,10 +33,12 @@ ink = 0;
 initialize_states_with_animation();
 
 // Power Up Variables
-power_ink = false;
+power_ink = global.ink_power_up;
+
+if(power_ink) instance_create_layer(x, y - (bbox_bottom - bbox_top) / 2, "Power_Up", obj_power_up);
 
 // Itens Variables
-key_qtd = 0;
+keys = [];
 
 // Game Feel Initializes
 initialize_stretch();
@@ -97,16 +99,22 @@ take_power_up = function() {
 	state = power_up_start_state;
 }
 
-take_key = function() {
-	key_qtd++;
+take_key = function(_key_obj) {
+	array_push(keys, _key_obj);
 }
 
 open_door = function() {
-	var _door = instance_place(x + hspd, y + vspd, obj_door);
+	var _door = instance_place(x + hspd, y + vspd, obj_door),
+	_array_length = array_length(keys);
 	
-	if(_door and _door.closed and key_qtd > 0) {
-		_door.open_self();
-		key_qtd--;
+	if(_door and !_door.wainting_for_open and _array_length > 0) {
+		var _key = keys[_array_length - 1];
+		
+		_key.target = _door;
+		_key.state = _key.move_to_door;
+		array_pop(keys);
+		
+		_door.wainting_for_open = true;
 	}
 }
 

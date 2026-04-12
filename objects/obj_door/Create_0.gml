@@ -1,4 +1,5 @@
 closed = true;
+wainting_for_open = false;
 vspd = -0.5;
 
 //ps_door_opening
