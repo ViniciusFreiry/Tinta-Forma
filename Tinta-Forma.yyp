@@ -126,6 +126,7 @@
     {"id":{"name":"rm_level_1","path":"rooms/rm_level_1/rm_level_1.yy",},},
     {"id":{"name":"rm_level_2","path":"rooms/rm_level_2/rm_level_2.yy",},},
     {"id":{"name":"rm_level_3","path":"rooms/rm_level_3/rm_level_3.yy",},},
+    {"id":{"name":"scr_corner_correction","path":"scripts/scr_corner_correction/scr_corner_correction.yy",},},
     {"id":{"name":"scr_coyote_jump","path":"scripts/scr_coyote_jump/scr_coyote_jump.yy",},},
     {"id":{"name":"scr_damage_flash","path":"scripts/scr_damage_flash/scr_damage_flash.yy",},},
     {"id":{"name":"scr_glow","path":"scripts/scr_glow/scr_glow.yy",},},

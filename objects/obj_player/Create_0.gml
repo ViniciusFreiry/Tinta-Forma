@@ -11,7 +11,7 @@ jumps_qtd = 1;
 actual_jumps_qtd = jumps_qtd;
 start_jump = true;
 initialize_coyote_jump();
-initialize_input_buffer(1);
+initialize_corner_correction();
 
 // Collisions
 collision_ink = layer_tilemap_get_id("Ink");
@@ -49,6 +49,7 @@ enum Player_Buffers {
 #endregion
 
 #region Functions
+initialize_input_buffer(1);
 inputs = function() {
 	left = keyboard_check(ord("A"));
 	right = keyboard_check(ord("D"));
@@ -171,8 +172,12 @@ jump_state = function() {
 	
 	if(vspd < 0) stop_coyote_timer();
 	
-	var _collisions = [obj_wall, collision_tl];
-	if(hit_the_ceil(vspd, _collisions)) vspd = 0;
+	var _collisions = [obj_wall, collision_tl],
+	_hit_the_ceil = hit_the_ceil(vspd, _collisions);
+	
+	if(_hit_the_ceil) {
+		if(!check_corner_correction(_hit_the_ceil, hspd, vspd, _collisions)) vspd = 0;
+	}
 	
 	if(vspd < 0) {
 		if(jump_r) vspd /= 2;

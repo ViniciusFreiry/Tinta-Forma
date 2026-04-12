@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_input_buffer",
+  "%Name":"scr_corner_correction",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_input_buffer",
+  "name":"scr_corner_correction",
   "parent":{
     "name":"Scripts",
     "path":"folders/Utilities/Quality of Life/Scripts.yy",
