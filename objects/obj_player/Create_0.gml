@@ -4,11 +4,14 @@ hspd = 0;
 vspd = 0;
 max_hspd = 1;
 max_vspd = 5;
+hspd_walk = 1;
+hspd_run = 2;
 grav = 0.3;
 jumps_qtd = 1;
 actual_jumps_qtd = jumps_qtd;
 start_jump = true;
 initialize_coyote_jump();
+initialize_input_buffer(1);
 
 // Collisions
 collision_ink = layer_tilemap_get_id("Ink");
@@ -38,6 +41,11 @@ key_qtd = 0;
 // Game Feel Initializes
 initialize_stretch();
 initialize_shader_draw();
+
+// Buffers
+enum Player_Buffers {
+	JUMP
+}
 #endregion
 
 #region Functions
@@ -45,8 +53,11 @@ inputs = function() {
 	left = keyboard_check(ord("A"));
 	right = keyboard_check(ord("D"));
 	jump = keyboard_check_pressed(vk_space);
-	jump_r = keyboard_check_released(vk_space);
-	ink = keyboard_check(vk_shift);
+	jump_r = !keyboard_check(vk_space);
+	ink = keyboard_check(ord("E"));
+	run = keyboard_check(vk_shift);
+	
+	if(!ground) set_buffer(jump, Player_Buffers.JUMP);
 }
 
 apply_spd = function() {
@@ -95,6 +106,17 @@ open_door = function() {
 	if(_door and _door.closed and key_qtd > 0) {
 		_door.open_self();
 		key_qtd--;
+	}
+}
+
+controll_run = function() {
+	if(run) {
+		max_hspd = hspd_run;
+		if(state = moving_state) image_speed = 2;
+		else image_speed = 1;
+	} else {
+		image_speed = 1;
+		max_hspd = hspd_walk;
 	}
 }
 
@@ -170,11 +192,15 @@ jump_state = function() {
 		if(vspd > 0) {
 			change_sprite_with_animation();
 		} else if(ground) {
-			change_state(idle_state, [spr_player_land, spr_player_idle]);
 			instance_create_depth(x, y, depth - 1, obj_player_fall_particle);
 			set_stretch(1.2, 0.5);
 			actual_jumps_qtd = jumps_qtd;
 			start_jump = true;
+			
+			if(get_buffer(Player_Buffers.JUMP)) {
+				change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
+				vspd = -max_vspd;
+			} else change_state(idle_state, [spr_player_land, spr_player_idle]);
 		}
 		
 		if(!array_contains(collisions, obj_wall_one_way) and !place_meeting(x, y, obj_wall_one_way)) array_push(collisions, obj_wall_one_way);

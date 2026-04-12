@@ -16,7 +16,7 @@ function change_sprite(_sprite) {
 }
 
 function animation_end() {
-	var _spd = sprite_get_speed(spr_player_powerup_start) / FPS;
+	var _spd = sprite_get_speed(spr_player_powerup_start) / FPS * image_speed;
 	
 	if(image_index + _spd >= image_number) return true;
 	

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_utilities",
+  "%Name":"scr_input_buffer",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_utilities",
+  "name":"scr_input_buffer",
   "parent":{
     "name":"Scripts",
     "path":"folders/Utilities/Utilities/Scripts.yy",

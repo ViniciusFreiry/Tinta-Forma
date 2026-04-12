@@ -6,7 +6,7 @@
   "name":"scr_platformer_utilities",
   "parent":{
     "name":"Scripts",
-    "path":"folders/Utilities/Scripts.yy",
+    "path":"folders/Utilities/Utilities/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
