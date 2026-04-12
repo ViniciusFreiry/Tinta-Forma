@@ -23,7 +23,7 @@
   ],
   "name":"spr_big_window",
   "nineSlice":null,
-  "origin":0,
+  "origin":9,
   "parent":{
     "name":"Decorations",
     "path":"folders/Sprites/Level/Decorations.yy",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":0,
+    "xorigin":-1,
     "yorigin":0,
   },
   "swatchColours":null,

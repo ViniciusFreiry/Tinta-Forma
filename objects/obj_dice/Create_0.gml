@@ -1,5 +1,3 @@
-timer = 0;
-
 // State Variables
 state_solid = function() {
 	image_index = 0;
@@ -7,10 +5,10 @@ state_solid = function() {
 	mask_index = spr_dice_block;
 	if(place_meeting(x, y, obj_player)) mask_index = spr_noone;
 	
-	timer++;
+	timer--;
 	
-	if(timer >= switch_time) {
-		timer = 0;
+	if(timer <= switch_time) {
+		timer += switch_time;
 		
 		state = state_going_to_not_solid;
 	}
@@ -24,10 +22,10 @@ state_not_solid = function() {
 	image_index = 8;
 	mask_index = spr_noone;
 	
-	timer++;
+	timer--;
 	
-	if(timer >= switch_time) {
-		timer = 0;
+	if(timer <= switch_time) {
+		timer += switch_time;
 		
 		state = state_going_to_solid;
 	}

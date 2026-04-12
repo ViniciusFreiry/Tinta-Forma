@@ -1,0 +1,1 @@
+generic_method(other);

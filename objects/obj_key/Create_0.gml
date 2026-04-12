@@ -26,6 +26,7 @@ move_to_door = function() {
 		
 		if(image_yscale < 0.1) {
 			target.open_self();
+			screen_shake(20);
 			instance_destroy();
 		}
 	}

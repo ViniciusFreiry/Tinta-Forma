@@ -3,7 +3,7 @@
 hspd = 0;
 vspd = 0;
 max_hspd = 1;
-max_vspd = 5;
+max_vspd = 5.5;
 hspd_walk = 1;
 hspd_run = 2;
 grav = 0.3;
@@ -58,7 +58,7 @@ inputs = function() {
 	jump = keyboard_check_pressed(vk_space);
 	jump_r = !keyboard_check(vk_space);
 	ink = keyboard_check(ord("E"));
-	run = keyboard_check(vk_shift);
+	run = global.run_power_up and keyboard_check(vk_shift);
 	
 	if(!ground) set_buffer(jump, Player_Buffers.JUMP);
 }
@@ -211,6 +211,7 @@ jump_state = function() {
 			start_jump = true;
 			
 			if(get_buffer(Player_Buffers.JUMP)) {
+				image_index = 0;
 				change_state(jump_state, [spr_player_start_jump, spr_player_jump]);
 				vspd = -max_vspd;
 			} else change_state(idle_state, [spr_player_land, spr_player_idle]);
