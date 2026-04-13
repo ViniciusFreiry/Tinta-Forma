@@ -27,8 +27,14 @@
   "physicsShapePoints":[],
   "physicsStartAwake":true,
   "properties":[
+    {"$GMObjectProperty":"v2","%Name":"mode","filters":[],"listItems":[
+        "\"stop_player\"",
+        "\"return_player\"",
+        "\"define_position\"",
+      ],"multiselect":false,"name":"mode","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"stop_player\"","varType":6,},
     {"$GMObjectProperty":"v2","%Name":"return_x","filters":[],"listItems":[],"multiselect":false,"name":"return_x","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"304","varType":1,},
     {"$GMObjectProperty":"v2","%Name":"return_y","filters":[],"listItems":[],"multiselect":false,"name":"return_y","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"432","varType":0,},
+    {"$GMObjectProperty":"v2","%Name":"player_xscale","filters":[],"listItems":[],"multiselect":false,"name":"player_xscale","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"1","varType":0,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

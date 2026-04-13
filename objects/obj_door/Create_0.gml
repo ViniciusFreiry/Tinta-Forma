@@ -44,6 +44,7 @@ opening_state = function() {
 	if(y <= ystart - sprite_height) {
 		alarm[0] = FPS;
 		
+		x = xstart;
 		state = open_state;
 	}
 }

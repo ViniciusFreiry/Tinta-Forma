@@ -1,1 +1,0 @@
-generic_method = stop_player;

@@ -26,3 +26,13 @@ return_player = function(_player) {
 		_shadow.image_xscale = _player.image_xscale;
 	}
 }
+
+define_position = function(_player) {
+	global.player_x = return_x;
+	global.player_y = return_y;
+	global.player_xscale = player_xscale;
+	
+	create_my_save();
+}
+
+generic_method = variable_instance_get(id, mode);

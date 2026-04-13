@@ -23,6 +23,10 @@ function animation_end() {
 	return false;
 }
 
+function generate_sin_wave(_frequency = 5, _current_time = current_time) {
+	return sin(_frequency * _current_time / 1000);
+}
+
 #region States with Animation
 function initialize_states_with_animation(_sprite = sprite_index) {
 	state = noone;
@@ -43,6 +47,72 @@ function change_state(_state, _sprites_list) {
 }
 #endregion
 
-function generate_sin_wave(_frequency = 5, _current_time = current_time) {
-	return sin(_frequency * _current_time / 1000);
+#region Save
+global.actual_save_slot = 1;
+
+function set_save_slot(_slot = 1) {
+	global.actual_save_slot = _slot;
 }
+
+function get_save_slot() {
+	return global.actual_save_slot;
+}
+
+function save_game(_variables_to_save = [], _save_number = global.actual_save_slot) {
+	var _save_struct = { deleted_file: false };
+	
+	for(var _i = 0; _i < array_length(_variables_to_save); _i++) {
+		variable_struct_set(_save_struct, _variables_to_save[_i], variable_global_get(_variables_to_save[_i]));
+	}
+	
+	var _buffer = buffer_create(0, buffer_grow, 1);
+
+	buffer_write(_buffer, buffer_string, json_stringify(_save_struct));
+	buffer_save(_buffer, string("save_{0}.json", _save_number));
+
+	buffer_delete(_buffer);
+	delete _save_struct;
+}
+
+function load_saved_game(_save_number = global.actual_save_slot) {
+	var _buffer = buffer_load(string("save_{0}.json", _save_number));
+	
+	if(_buffer == -1) return;
+	
+	var _struct = json_parse(buffer_read(_buffer, buffer_string));
+	
+	if(_struct.deleted_file) {
+		delete _struct;
+		return;
+	}
+	
+	var _variables = struct_get_names(_struct);
+	
+	for(var _i = 0; _i < array_length(_variables); _i++) {
+		variable_global_set(_variables[_i], _struct[$ _variables[_i]]);
+	}
+	
+	buffer_delete(_buffer);
+	delete _struct;
+}
+
+function delete_saved_game(_save_number = global.actual_save_slot) {
+	var _buffer = buffer_load(string("save_{0}.json", _save_number));
+	
+	if(_buffer == -1) return;
+	
+	var _struct = json_parse(buffer_read(_buffer, buffer_string));
+	
+	_struct.deleted_file = true;
+	
+	buffer_delete(_buffer);
+	
+	_buffer = buffer_create(0, buffer_grow, 1);
+	
+	buffer_write(_buffer, buffer_string, json_stringify(_struct));
+	buffer_save(_buffer, string("save_{0}.json", _save_number));
+	
+	buffer_delete(_buffer);
+	delete _struct;
+}
+#endregion

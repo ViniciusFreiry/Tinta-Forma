@@ -54,6 +54,14 @@ enum Player_Buffers {
 #endregion
 
 #region Functions
+start_hub_player = function() {
+	if(!hub_player) return;
+	
+	x = global.player_x;
+	y = global.player_y;
+	image_xscale = global.player_xscale;
+}
+
 initialize_input_buffer(1);
 inputs = function() {
 	left = keyboard_check(ord("A"));
@@ -333,4 +341,5 @@ debug_check = function() {
 
 debug_check();
 show_debug();
+start_hub_player();
 state = idle_state;

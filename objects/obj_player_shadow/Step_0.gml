@@ -13,5 +13,9 @@ if(point_distance(x, y, target_x, target_y) <= 0.5) {
 	camera_set_view_target(view_camera, owner);
 	with(owner) change_state(jump_state, [spr_player_fall]);
 	
+	with(obj_power_up) {
+		if(target != noone) target = other.owner;
+	}
+	
 	instance_destroy();
 }
