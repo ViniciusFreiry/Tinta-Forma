@@ -1,10 +1,9 @@
 if(target == noone) {
 	target = other;
 	
-	if(!global.ink_power_up) {
+	if(!variable_global_get(power_up)) {
+		variable_global_set(power_up, true);
 		other.take_power_up();
-		other.power_ink = true;
-		global.ink_power_up = true;
 	} else {
 		x_offset = -10;
 		y_offset = -35;

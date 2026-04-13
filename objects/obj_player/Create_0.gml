@@ -3,7 +3,7 @@
 hspd = 0;
 vspd = 0;
 max_hspd = 1;
-max_vspd = 5.5;
+max_vspd = 5.2;
 hspd_walk = 1;
 hspd_run = 2;
 grav = 0.3;
@@ -34,8 +34,11 @@ initialize_states_with_animation();
 
 // Power Up Variables
 power_ink = global.ink_power_up;
+power_run = global.run_power_up;
 
-if(power_ink) instance_create_layer(x, y - (bbox_bottom - bbox_top) / 2, "Power_Up", obj_power_up);
+var _power_up_y = y - (bbox_bottom - bbox_top) / 2;
+if(power_ink) instance_create_layer(x, _power_up_y, "Power_Up", obj_power_up).target = id;
+if(power_run) instance_create_layer(x, _power_up_y, "Power_Up", obj_power_up, { power_up: "run_power_up" }).target = id;
 
 // Itens Variables
 keys = [];
@@ -58,7 +61,7 @@ inputs = function() {
 	jump = keyboard_check_pressed(vk_space);
 	jump_r = !keyboard_check(vk_space);
 	ink = keyboard_check(ord("E"));
-	run = global.run_power_up and keyboard_check(vk_shift);
+	run = power_run and keyboard_check(vk_shift);
 	
 	if(!ground) set_buffer(jump, Player_Buffers.JUMP);
 }
@@ -97,6 +100,9 @@ ground_check = function() {
 
 take_power_up = function() {
 	state = power_up_start_state;
+	
+	power_ink = global.ink_power_up;
+	power_run = global.run_power_up;
 }
 
 take_key = function(_key_obj) {
