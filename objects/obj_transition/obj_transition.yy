@@ -29,7 +29,7 @@
   "properties":[
     {"$GMObjectProperty":"v2","%Name":"destiny_room","filters":[
         "GMRoom",
-      ],"listItems":[],"multiselect":false,"name":"destiny_room","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resource":{"name":"rm_level_1","path":"rooms/rm_level_1/rm_level_1.yy",},"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"rm_level_1","varType":5,},
+      ],"listItems":[],"multiselect":false,"name":"destiny_room","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resource":{"name":"rm_world_1_level_1","path":"rooms/rm_world_1_level_1/rm_world_1_level_1.yy",},"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"rm_world_1_level_1","varType":5,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
