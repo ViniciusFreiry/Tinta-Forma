@@ -103,6 +103,7 @@
     {"id":{"name":"obj_dice","path":"objects/obj_dice/obj_dice.yy",},},
     {"id":{"name":"obj_door","path":"objects/obj_door/obj_door.yy",},},
     {"id":{"name":"obj_easel","path":"objects/obj_easel/obj_easel.yy",},},
+    {"id":{"name":"obj_full_screen_controll","path":"objects/obj_full_screen_controll/obj_full_screen_controll.yy",},},
     {"id":{"name":"obj_hitstop_manager","path":"objects/obj_hitstop_manager/obj_hitstop_manager.yy",},},
     {"id":{"name":"obj_key","path":"objects/obj_key/obj_key.yy",},},
     {"id":{"name":"obj_particle_manager","path":"objects/obj_particle_manager/obj_particle_manager.yy",},},

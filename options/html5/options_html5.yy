@@ -1,6 +1,12 @@
 {
   "$GMHtml5Options":"",
   "%Name":"HTML5",
+  "ConfigValues":{
+    "Debug_Mode":{
+      "option_html5_foldername":"Tinta_Forma",
+      "option_html5_browser_title":"Tinta Forma",
+    },
+  },
   "name":"HTML5",
   "option_html5_allow_fullscreen":true,
   "option_html5_browser_title":"Pixel Game",
@@ -13,7 +19,7 @@
   "option_html5_foldername":"html5game",
   "option_html5_google_analytics_enable":false,
   "option_html5_google_tracking_id":"",
-  "option_html5_icon":"${base_options_dir}/html5/fav.ico",
+  "option_html5_icon":"${options_dir}/html5/fav.ico",
   "option_html5_index":"use_default",
   "option_html5_interpolate_pixels":false,
   "option_html5_jsprepend":"",

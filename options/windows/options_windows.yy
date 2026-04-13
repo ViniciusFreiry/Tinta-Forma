@@ -4,6 +4,12 @@
   "ConfigValues":{
     "Debug_Mode":{
       "option_windows_allow_fullscreen_switching":"true",
+      "option_windows_description_info":"A Platform Pixel Game",
+      "option_windows_product_info":"Tinta Forma",
+      "option_windows_company_info":"Vinícius Freiry",
+      "option_windows_executable_name":"Tinta_Forma.exe",
+      "option_windows_display_name":"Tinta Forma",
+      "option_windows_icon":"icons/icon.ico",
     },
   },
   "name":"Windows",
